@@ -20,7 +20,7 @@ const Login = () => {
         <Form>
           <Google>
             <img src="/public//images/google.svg" alt="" />
-            Sign in with Googlev22:40
+            <h2 style={{ marginLeft: 10 }}> Sign in with Google</h2>
           </Google>
         </Form>
       </Section>
@@ -47,6 +47,7 @@ const Nav = styled.nav`
   }
 `;
 const Join = styled.a`
+  cursor: pointer;
   font-size: 16px;
   padding: 10px 12px;
   text-decoration: none;
@@ -60,6 +61,7 @@ const Join = styled.a`
   }
 `;
 const SignIn = styled.a`
+  cursor: pointer;
   box-shadow: inset 0 0 0 1px #0a66c2;
   color: #0a66c2;
   border-radius: 24px;
@@ -132,6 +134,7 @@ const Form = styled.div`
   }
 `;
 const Google = styled.button`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   background-color: #fff;
@@ -151,4 +154,15 @@ const Google = styled.button`
     color: rgba(0, 0, 0, 0.75);
   }
 `;
-export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: () => dispatch(signInAPI()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
