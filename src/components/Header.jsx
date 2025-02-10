@@ -74,7 +74,6 @@ const Header = (props) => {
               <SignOut
                 onClick={async () => {
                   await props.signOut();
-                  setTimeout(() => navigate("/"), 100);
                 }}
               >
                 <a>Sign Out</a>
