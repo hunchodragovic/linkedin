@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-const Login = () => {
+import { signInAPI } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
+const Login = (props) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    props.user && navigate("/home");
+  }, [props.user]);
   return (
     <Container>
       <Nav>
@@ -18,7 +25,7 @@ const Login = () => {
           <img src="/public//images//login-hero.svg" alt="" />
         </Hero>
         <Form>
-          <Google>
+          <Google onClick={() => props.signIn()}>
             <img src="/public//images/google.svg" alt="" />
             <h2 style={{ marginLeft: 10 }}> Sign in with Google</h2>
           </Google>
