@@ -2,21 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { signOutAPI } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Content>
         <Logo>
           <a href="/home">
-            <img src="/public/images/home-logo" alt="" />
+            <img src="/images/home-logo.svg" alt="" />
           </a>
         </Logo>
         <Search>
           <div>
             <input type="text" placeholder="Search" />
             <SearchIcon>
-              <img src="/public/images/search-icon.svg" alt="" />
+              <img src="/images/search-icon.svg" alt="" />
             </SearchIcon>
           </div>
         </Search>
@@ -24,34 +27,34 @@ const Header = (props) => {
           <NavListWrap>
             <NavList className="active">
               <a>
-                <img src="/public/images/nav-home.svg" alt="" />
+                <img src="/images/nav-home.svg" alt="" />
                 <span>Home</span>
               </a>
             </NavList>
             <NavList>
               <a>
-                <img src="/public/images/nav-network.svg" alt="" />
+                <img src="/images/nav-network.svg" alt="" />
 
                 <span>My Network</span>
               </a>
             </NavList>
             <NavList>
               <a>
-                <img src="/public/images/nav-jobs.svg" alt="" />
+                <img src="/images/nav-jobs.svg" alt="" />
 
                 <span>Jobs</span>
               </a>
             </NavList>
             <NavList>
               <a>
-                <img src="/public/images/nav-messaging.svg" alt="" />
+                <img src="/images/nav-messaging.svg" alt="" />
 
                 <span>Messaging</span>
               </a>
             </NavList>
             <NavList>
               <a>
-                <img src="/public/images/nav-notifications.svg" alt="" />
+                <img src="/images/nav-notifications.svg" alt="" />
                 <span>Notifications</span>
               </a>
             </NavList>
@@ -60,24 +63,29 @@ const Header = (props) => {
                 {props.user && props.user.photoURL ? (
                   <img src={props.user.photoURL} />
                 ) : (
-                  <img src="/public/images/user.svg" alt="" />
+                  <img src="/images/user.svg" alt="" />
                 )}
 
                 <span>
                   Me
-                  <img src="/public/images/down-icon.svg" alt="" />
+                  <img src="/images/down-icon.svg" alt="" />
                 </span>
               </a>
-              <SignOut onClick={() => props.signOut()}>
+              <SignOut
+                onClick={async () => {
+                  await props.signOut();
+                  setTimeout(() => navigate("/"), 100);
+                }}
+              >
                 <a>Sign Out</a>
               </SignOut>
             </User>
             <Work>
               <a>
-                <img src="/public/images/nav-work.svg" alt="" />
+                <img src="/images/nav-work.svg" alt="" />
                 <span>
                   Work
-                  <img src="/public/images/down-icon.svg" alt="" />
+                  <img src="/images/down-icon.svg" alt="" />
                 </span>
               </a>
             </Work>
@@ -174,8 +182,11 @@ const NavListWrap = styled.ul`
       width: 100%;
       border-color: rgba(0, 0, 0, 0.9);
     }
+  }
 `;
+
 const NavList = styled.li`
+  cursor: pointer;
   display: flex;
   align-items: center;
   a {
@@ -229,6 +240,7 @@ const SignOut = styled.div`
   }
 `;
 const User = styled(NavList)`
+  cursor: pointer;
   a > svg {
     width: 24px;
     border-radius: 50%;
@@ -255,6 +267,7 @@ const User = styled(NavList)`
 `;
 
 const Work = styled(User)`
+  cursor: pointer;
   border-left: 1px solid rgba(0, 0, 0, 0.08);
   @media (max-width: 575px) {
     display: none;
