@@ -77,10 +77,10 @@ const PostModal = (props) => {
               </ShareContent>
               <ShareCreation>
                 <AttachAssets>
-                  <AssetButton onClick={() => switchAssetArea("image")}>
+                  <AssetButton>
                     <img src="/images/share-image.svg" alt="" />
                   </AssetButton>
-                  <AssetButton onClick={() => switchAssetArea("media")}>
+                  <AssetButton>
                     <img src="/images/share-video.svg" alt="" />
                   </AssetButton>
                 </AttachAssets>
@@ -90,10 +90,7 @@ const PostModal = (props) => {
                     Anyone
                   </AssetButton>
                 </ShareComment>
-                <PostButton
-                  onClick={(e) => handlePostArticles(e)}
-                  disabled={!editorText ? true : false}
-                >
+                <PostButton disabled={!editorText ? true : false}>
                   Post
                 </PostButton>
               </ShareCreation>
