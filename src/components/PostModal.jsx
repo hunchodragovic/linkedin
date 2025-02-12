@@ -8,6 +8,31 @@ const PostModal = (props) => {
   const [assetArea, setAssetArea] = useState("");
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
+
+  const handleChange = (e) => {
+    const image = e.target.files[0];
+
+    if (image === "" || image === undefined) {
+      alert(`not an image , the file is a ${typeof image}`);
+      return;
+    } else {
+      setShareImage(image);
+    }
+  };
+
+  const switchAssetArea = (area) => {
+    setShareImage("");
+    setVideoLink("");
+    setAssetArea(area);
+  };
+
+  const reset = (e) => {
+    setShareImage("");
+    setVideoLink("");
+    setAssetArea("");
+    props.handleClick(e);
+  };
+
   return (
     <>
       <>
@@ -16,7 +41,7 @@ const PostModal = (props) => {
             <Content>
               <Header>
                 <h2>Create a post</h2>
-                <button>
+                <button onClick={(e) => reset(e)}>
                   <img src="/images/close-icon.svg" alt="" />
                 </button>
               </Header>
@@ -45,19 +70,23 @@ const PostModal = (props) => {
                         style={{ display: "none" }}
                         onChange={handleChange}
                       />
-                      <p>
-                        <label
-                          style={{
-                            cursor: "pointer",
-                            display: "block",
-                            marginBottom: "15px",
-                          }}
-                          htmlFor="file"
-                        >
-                          Select an image to share
-                        </label>
-                      </p>
-                      {shareImage && <img src="" alt="img" />}
+                      {!shareImage && (
+                        <p>
+                          <label
+                            style={{
+                              cursor: "pointer",
+                              display: "block",
+                              marginBottom: "15px",
+                            }}
+                            htmlFor="file"
+                          >
+                            Select an image to share
+                          </label>
+                        </p>
+                      )}
+                      {shareImage && (
+                        <img src={URL.createObjectURL(shareImage)} alt="img" />
+                      )}
                     </UploadImage>
                   ) : (
                     assetArea === "media" && (
@@ -79,10 +108,10 @@ const PostModal = (props) => {
               </ShareContent>
               <ShareCreation>
                 <AttachAssets>
-                  <AssetButton>
+                  <AssetButton onClick={() => switchAssetArea("image")}>
                     <img src="/images/share-image.svg" alt="" />
                   </AssetButton>
-                  <AssetButton>
+                  <AssetButton onClick={() => switchAssetArea("media")}>
                     <img src="/images/share-video.svg" alt="" />
                   </AssetButton>
                 </AttachAssets>
@@ -92,7 +121,7 @@ const PostModal = (props) => {
                     Anyone
                   </AssetButton>
                 </ShareComment>
-                <PostButton disabled={!editorText ? true : false}>
+                <PostButton disabled={!editorText && !videoLink && !shareImage}>
                   Post
                 </PostButton>
               </ShareCreation>
