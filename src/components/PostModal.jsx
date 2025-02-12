@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { postArticleAPI } from "../redux/actions";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");

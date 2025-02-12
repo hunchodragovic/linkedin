@@ -1,5 +1,11 @@
-import { addDoc, collection } from "firebase/firestore";
-import { auth, provider } from "../../config/firebase";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { auth, db, provider } from "../../config/firebase";
 import * as actions from "./actions";
 import { signInWithPopup } from "firebase/auth";
 import { getDownloadURL, uploadBytesResumable } from "firebase/storage";
@@ -100,5 +106,16 @@ export function postArticleAPI(payload) {
       });
       dispatch(actions.setLoading(false));
     }
+  };
+}
+export function getArticlesAPI() {
+  return (dispatch) => {
+    let payload;
+    const collRef = collection(db, "articles");
+    const orderedRef = query(collRef, orderBy("actor.date", "desc"));
+    onSnapshot(orderedRef, (snapshot) => {
+      payload = snapshot.docs.map((doc) => doc.data());
+      dispatch(actions.getArticles(payload));
+    });
   };
 }
