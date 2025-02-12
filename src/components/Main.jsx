@@ -132,8 +132,14 @@ const Content = styled.div`
 `;
 const mapStateToProps = (state) => {
   return {
+    loading: state.articleState.loading,
     user: state.userState.user,
+    articles: state.articleState.articles,
   };
 };
-
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getArticles: () => dispatch(getArticlesAPI()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
