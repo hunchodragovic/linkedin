@@ -195,7 +195,7 @@ const CommunityCard = styled(ArtCard)`
       border-top: 1px solid #d6cec2;
       padding: 12px;
       &:hover {
-        background-color: rgba(0, 0, 0, 0.08);
+        background-color: rgba(0, 0, 0, 0.09);
       }
     }
   }
